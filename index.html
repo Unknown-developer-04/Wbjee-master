@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WBJEE Master — PYQ 2005–2025 with Short Tricks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- PARTICLES BG -->
+<canvas id="particles"></canvas>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <span class="logo-w">W</span><span class="logo-b">BJEE</span>
+      <span class="logo-tag">MASTER</span>
+    </div>
+    <div class="nav-links">
+      <a href="#home" class="nav-link active" onclick="scrollTo('home')">Home</a>
+      <a href="#pyq" class="nav-link" onclick="showSection('pyq')">PYQ Bank</a>
+      <a href="#tricks" class="nav-link" onclick="showSection('tricks')">Tricks</a>
+      <a href="#stats" class="nav-link" onclick="scrollToId('stats-section')">Stats</a>
+    </div>
+    <button class="nav-theme" onclick="toggleTheme()" title="Toggle theme">◐</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="hero-bg-text">WBJEE</div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span> 2005 – 2025 · All PYQs Free
+    </div>
+    <h1 class="hero-title">
+      <span class="title-line" data-delay="0">Crack WBJEE</span>
+      <span class="title-line accent" data-delay="150">Faster Than</span>
+      <span class="title-line" data-delay="300">Everyone.</span>
+    </h1>
+    <p class="hero-sub">Every PYQ from 2005–2025 · Short tricks on each question · Detailed solutions · Free forever</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="showSection('pyq')">
+        <span>Start Practising</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <button class="btn-secondary" onclick="scrollToId('stats-section')">View Stats</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-num" data-target="2800">0</span><span class="hstat-unit">+</span><div class="hstat-label">Questions</div></div>
+      <div class="hstat-div"></div>
+      <div class="hstat"><span class="hstat-num" data-target="21">0</span><div class="hstat-label">Years</div></div>
+      <div class="hstat-div"></div>
+      <div class="hstat"><span class="hstat-num" data-target="100">0</span><span class="hstat-unit">%</span><div class="hstat-label">Tricks</div></div>
+      <div class="hstat-div"></div>
+      <div class="hstat"><span class="hstat-num" data-target="0">0</span><div class="hstat-label">Cost</div></div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- MAIN APP -->
+<section id="app-section" class="app-section">
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar" id="filter-bar">
+    <div class="filter-inner">
+
+      <!-- Subject -->
+      <div class="filter-group">
+        <label class="filter-label">Subject</label>
+        <div class="filter-chips" id="subjectChips">
+          <button class="chip active" onclick="setFilter('subject','all',this)">All</button>
+          <button class="chip" onclick="setFilter('subject','physics',this)">⚡ Physics</button>
+          <button class="chip" onclick="setFilter('subject','math',this)">∑ Math</button>
+          <button class="chip" onclick="setFilter('subject','chemistry',this)">⚗ Chemistry</button>
+        </div>
+      </div>
+
+      <!-- Year -->
+      <div class="filter-group">
+        <label class="filter-label">Year</label>
+        <div class="filter-chips year-chips" id="yearChips">
+          <button class="chip active" onclick="setFilter('year','all',this)">All</button>
+        </div>
+      </div>
+
+      <!-- Category -->
+      <div class="filter-group">
+        <label class="filter-label">WBJEE Category</label>
+        <div class="filter-chips" id="catChips">
+          <button class="chip active" onclick="setFilter('cat','all',this)">All</button>
+          <button class="chip" onclick="setFilter('cat','1',this)">Cat 1 (+1/-0.25)</button>
+          <button class="chip" onclick="setFilter('cat','2',this)">Cat 2 (+2/-0.5)</button>
+          <button class="chip" onclick="setFilter('cat','3',this)">Cat 3 (Partial)</button>
+        </div>
+      </div>
+
+      <!-- Difficulty -->
+      <div class="filter-group">
+        <label class="filter-label">Difficulty</label>
+        <div class="filter-chips" id="diffChips">
+          <button class="chip active" onclick="setFilter('diff','all',this)">All</button>
+          <button class="chip easy" onclick="setFilter('diff','easy',this)">Easy</button>
+          <button class="chip medium" onclick="setFilter('diff','medium',this)">Medium</button>
+          <button class="chip hard" onclick="setFilter('diff','hard',this)">Hard</button>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div class="filter-group search-group">
+        <input type="text" class="search-input" placeholder="Search chapter, topic, keyword..." oninput="searchQuestions(this.value)" id="searchInput">
+        <span class="search-icon">⌕</span>
+      </div>
+
+      <div class="filter-meta">
+        Showing <span id="countDisplay">0</span> questions
+        <button class="reset-btn" onclick="resetFilters()">Reset filters</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div class="questions-container" id="questionsContainer">
+    <div class="q-loading" id="qLoading">
+      <div class="loading-spinner"></div>
+      <p>Loading questions...</p>
+    </div>
+    <div id="questionsList"></div>
+    <div class="no-results hidden" id="noResults">
+      <div class="no-results-icon">◌</div>
+      <p>No questions found. Try different filters.</p>
+      <button onclick="resetFilters()" class="btn-secondary">Reset</button>
+    </div>
+  </div>
+</section>
+
+<!-- STATS SECTION -->
+<section id="stats-section" class="stats-section">
+  <div class="stats-inner">
+    <h2 class="section-title">Chapter Frequency Analysis</h2>
+    <p class="section-sub">Most asked chapters in WBJEE 2005–2025</p>
+    <div class="freq-grid" id="freqGrid"></div>
+  </div>
+</section>
+
+<!-- QUICK TRICKS SECTION -->
+<section id="tricks-section" class="tricks-section">
+  <div class="tricks-inner">
+    <h2 class="section-title">Quick Trick Library</h2>
+    <p class="section-sub">Master these — solve 60% of WBJEE in under 30 seconds each</p>
+    <div class="tricks-grid" id="tricksGrid"></div>
+  </div>
+</section>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
